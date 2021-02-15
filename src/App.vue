@@ -1,12 +1,18 @@
 <template>
   <div id="app">
     <h1>Messanger</h1>
+    <RegistrationForm/>
   </div>
 </template>
 
 <script>
+import RegistrationForm from "./components/RegistrationForm";
+
 export default {
   name: 'App',
+  components: {
+    RegistrationForm,
+  }
 }
 </script>
 
