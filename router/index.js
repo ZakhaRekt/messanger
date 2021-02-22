@@ -1,5 +1,6 @@
 import VueRouter from "vue-router"
 
+import Home from "../src/components/Home"
 import LoginForm from "../src/components/LoginForm"
 import RegistrationForm from "../src/components/RegistrationForm"
 
@@ -8,7 +9,7 @@ export default new VueRouter({
     routes: [
         {
             path: "/",
-            component: LoginForm
+            component: Home
         },
         {
             path: "/login",

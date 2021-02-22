@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <h1>Messanger</h1>
+    <h1>
+      <router-link :to="'/'">Messenger</router-link>
+    </h1>
     <router-view></router-view>
   </div>
 </template>
@@ -19,5 +21,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+h1 a {
+  color: #333 !important;
+  text-decoration: none;
 }
 </style>

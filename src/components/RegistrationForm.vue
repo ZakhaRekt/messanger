@@ -10,6 +10,8 @@
 </template>
 
 <script>
+/*import axios from "axios"*/
+
 export default {
   name: "RegistrationForm",
   data() {
@@ -38,6 +40,15 @@ export default {
         alert("Пароль должнен быть не меньше 8 и не больше 36 символов")
         return
       }
+
+      /*axios.post('', {
+
+      })
+      .then(response => {
+
+      }, error => {
+
+      })*/
     }
   }
 }
