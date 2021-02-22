@@ -4,7 +4,7 @@
     <input type="text" placeholder="Логин" v-model="username">
     <input type="password" placeholder="Пароль" v-model="password">
     <input type="password" placeholder="Повтор Пароля" v-model="repeatPassword">
-    <button @click="register">Зарегистрироваться</button>
+    <button @click.prevent="register">Зарегистрироваться</button>
     <router-link :to="'/login'">Войти</router-link>
   </form>
 </template>
@@ -22,7 +22,10 @@ export default {
   },
   methods: {
     register() {
-
+      if (this.password !== this.repeatPassword) {
+        alert("Пароли отличаются")
+        return
+      }
     }
   }
 }

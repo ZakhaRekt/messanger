@@ -2,7 +2,7 @@
   <form>
     <input type="text" placeholder="Логин" v-model="username">
     <input type="password" placeholder="Пароль" v-model="password">
-    <button @click="login">Войти</button>
+    <button @click.prevent="login">Войти</button>
     <router-link :to="'/register'">Зарегистрироваться</router-link>
   </form>
 </template>
