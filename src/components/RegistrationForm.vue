@@ -22,19 +22,19 @@ export default {
   },
   methods: {
     register() {
-      if (this.password !== this.repeatPassword) {
-        alert("Пароли отличаются")
-        return
-      }
       if (this.name.length < 4 || this.name.length > 16 ) {
         alert("Имя должно быть не меньше 4 и не больше 16 символов")
         return
       }
-      if (this.username.length < 8 || this.name.length > 24 ) {
+      if (this.username.length < 8 || this.username.length > 24 ) {
         alert("Логин должнен быть не меньше 8 и не больше 24 символов")
         return
       }
-      if (this.password.length < 8 || this.name.length > 36 ) {
+      if (this.password !== this.repeatPassword) {
+        alert("Пароли отличаются")
+        return
+      }
+      if (this.password.length < 8 || this.password.length > 36 ) {
         alert("Пароль должнен быть не меньше 8 и не больше 36 символов")
         return
       }
