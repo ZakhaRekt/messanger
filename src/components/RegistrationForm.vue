@@ -5,7 +5,7 @@
     <input type="password" placeholder="Пароль" v-model="password">
     <input type="password" placeholder="Повтор Пароля" v-model="repeatPassword">
     <button @click="register">Зарегистрироваться</button>
-    <a href="/login">Войти</a>
+    <router-link :to="'/login'">Войти</router-link>
   </form>
 </template>
 
@@ -36,9 +36,14 @@ form {
 input {
   width: 100%;
   margin: 0 0 10px 0;
+  font-size: 18px;
+  padding: 5px 10px;
+  box-sizing: border-box;
 }
 button {
   width: 100%;
+  height: 50px;
+  font-size: 18px;
 }
 a {
   display: inline-block;

@@ -3,7 +3,7 @@
     <input type="text" placeholder="Логин" v-model="username">
     <input type="password" placeholder="Пароль" v-model="password">
     <button @click="login">Войти</button>
-    <a href="/register">Зарегистрироваться</a>
+    <router-link :to="'/register'">Зарегистрироваться</router-link>
   </form>
 </template>
 
@@ -32,9 +32,14 @@ form {
 input {
   width: 100%;
   margin: 0 0 10px 0;
+  font-size: 18px;
+  padding: 5px 10px;
+  box-sizing: border-box;
 }
 button {
   width: 100%;
+  height: 50px;
+  font-size: 18px;
 }
 a {
   display: inline-block;
