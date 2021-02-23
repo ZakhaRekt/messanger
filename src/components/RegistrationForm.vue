@@ -2,6 +2,7 @@
   <form>
     <input type="text" placeholder="Имя" v-model="name">
     <input type="text" placeholder="Логин" v-model="username">
+    <input type="number" min="13" max="92" placeholder="Возраст" v-model="age">
     <input type="password" placeholder="Пароль" v-model="password">
     <input type="password" placeholder="Повтор Пароля" v-model="repeatPassword">
     <button @click.prevent="register">Зарегистрироваться</button>
@@ -16,6 +17,7 @@ export default {
     return {
       name: "",
       username: "",
+      age: "",
       password: "",
       repeatPassword: "",
     }
@@ -59,7 +61,7 @@ export default {
           username: this.username,
           password: this.password,
           ip: clientIp,
-          age: "18"
+          age: this.age,
         })
       }).then(response => {
         console.log(response.json())
