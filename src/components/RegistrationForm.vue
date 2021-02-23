@@ -10,8 +10,6 @@
 </template>
 
 <script>
-/*import axios from "axios"*/
-
 export default {
   name: "RegistrationForm",
   data() {
@@ -19,7 +17,7 @@ export default {
       name: "",
       username: "",
       password: "",
-      repeatPassword: ""
+      repeatPassword: "",
     }
   },
   methods: {
@@ -41,14 +39,31 @@ export default {
         return
       }
 
-      /*axios.post('', {
+      let clientIp = ""
+      fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(response => {
+            clientIp = response.ip;
+          });
 
+      console.log(clientIp)
+
+      console.log("otpravleno")
+      fetch('http://192.168.212.104:8081/api/addUser', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: this.name,
+          username: this.username,
+          password: this.password,
+          ip: clientIp,
+          age: "18"
+        })
+      }).then(response => {
+        console.log(response.json())
       })
-      .then(response => {
-
-      }, error => {
-
-      })*/
     }
   }
 }
