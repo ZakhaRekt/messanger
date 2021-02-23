@@ -4,6 +4,7 @@ import Home from "../components/Home"
 import LoginForm from "../components/LoginForm"
 import RegistrationForm from "../components/RegistrationForm"
 import Users from "../components/Users"
+import User from "../components/User"
 
 export default new VueRouter({
     mode: 'history',
@@ -23,6 +24,11 @@ export default new VueRouter({
         {
             path: "/users",
             component: Users
+        },
+        {
+            path: "/user/:username",
+            name: "user",
+            component: User
         },
     ]
 })
