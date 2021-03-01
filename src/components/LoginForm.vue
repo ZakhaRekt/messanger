@@ -14,12 +14,30 @@ export default {
     return {
       username: "",
       password: "",
+      clientIp: "",
     }
   },
   methods: {
     login() {
-
+      fetch('http://192.168.212.104:8081/api/addUser', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+          ip: this.clientIp,
+        })
+      }).then(response => {
+        localStorage.setItem("token", response.json().token)
+        this.$router.push('users')
+      })
     }
+  },
+  mounted() {
+    if (localStorage.getItem("token"))
+      this.$router.push('users')
   }
 }
 </script>

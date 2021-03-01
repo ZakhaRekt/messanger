@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "RegistrationForm",
   data() {
@@ -50,21 +51,19 @@ export default {
 
       console.log(clientIp)
 
-      console.log("otpravleno")
-      fetch('http://192.168.212.104:8081/api/addUser', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: this.name,
-          username: this.username,
-          password: this.password,
-          ip: clientIp,
-          age: this.age,
-        })
+      axios.post('http://192.168.212.104:8081/api/addUser', {
+        name: this.name,
+        username: this.username,
+        password: this.password,
+        ip: clientIp,
+        age: this.age,
       }).then(response => {
-        console.log(response.json())
+        if (response.data.status === '429')
+          alert(response.data.title)
+        else {
+          localStorage.setItem("token", response.data.token)
+          this.$router.push('users')
+        }
       })
     }
   }

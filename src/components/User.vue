@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a href="https://youtube.com">{{ user.name }}</a>
+    <div v-if="user.name">{{ user.name }}</div>
+    <div v-else>Ошибка 404. Пользователь не существует!</div>
   </div>
 </template>
 
@@ -11,12 +12,18 @@ export default {
   name: "User",
   data() {
     return {
-      user: []
+      user: [],
     }
   },
   mounted() {
-    axios.get("http://192.168.212.104:8081/api/user/" + this.$route.params.username)
-        .then(response => this.user = response.data.user)
+    axios.get("http://192.168.212.104:8081/api/user/" + this.$route.params.username, {
+          params: {
+            token: localStorage.getItem("token")
+          }
+        })
+        .then(response => {
+          this.user = response.data.user
+        })
   }
 }
 </script>
