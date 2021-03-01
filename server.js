@@ -6,9 +6,11 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const passwordHash = require('password-hash');
-
+const jwt = require('jsonwebtoken');
+const rateLimit = require("express-rate-limit");
 const User = require('./db/user');
-const app = express()
+const app = express();
+const { verifyToken } = require('./functions')
 
 
 app.use(helmet());
@@ -16,7 +18,20 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
-app.get('/api/users', async (req, res) => {
+const createAccountLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, 
+  max: 1,
+  message:"API СКАЗАЛО ПОШЁЛ НАХУЙ!",
+  handler: function(req,res) {
+    return res.send({
+      title: this.message,
+      status: '429'
+    })
+  }
+});
+
+app.post('/api/users',bodyParser.json(), async (req, res) => {
+  verifyToken()
   await User.find({}, async (err, users) => {
     if (err) return console.log(err);
     const usersParsed = [];
@@ -33,42 +48,6 @@ app.get('/api/users', async (req, res) => {
         users: [...usersParsed]
       }
     )
-  })
-})
-app.post('/api/addUser', bodyParser.json(), (req, res) => {
-  if (!req.body) return res.send({
-    title: 'Ничего не отправлено с клиента!'
-  });
-  if (Object.keys(req.body).length != 5) {
-    return res.send({
-      title: 'Ошибка! Обезательные поля не заполненны!',
-      status: '501'
-    })
-  }
-  User.findOne({ username: req.body.username }, (err, user) => {
-    if (err) console.log(err);
-    if (!user) {
-      const newUser = new User({
-        username: req.body.username,
-        name: req.body.name,
-        password: passwordHash.generate(req.body.password),
-        age: req.body.age,
-        regIP: req.body.ip
-      });
-
-      newUser.save(function (err) {
-        if (err) return console.log(err);
-      });
-      return res.send({
-        title: 'Потльзователь успешно добавлен',
-        status: '200'
-      })
-    } else {
-      return res.send({
-        title: 'Такой пользователь уже существует!',
-        status: '501'
-      })
-    }
   })
 })
 app.get('/api/user/:username', (req, res) => {
@@ -91,6 +70,81 @@ app.get('/api/user/:username', (req, res) => {
         age:user.age
       }
     })
+  })
+})
+app.post('/api/auth/', (req, res) => {
+  if (!req.body) return res.send({
+    title: 'Ничего не отправлено с клиента!'
+  });
+  if (Object.keys(req.body).length != 2) {
+    return res.send({
+      title: 'Ошибка! Обезательные поля не заполненны!',
+      status: '501'
+    })
+  }
+  User.findOne({username:req.body.username}, (err,user) => {
+    if(err) console.log(err);
+    if(!user) {
+      return res.send({
+        title:'Пользователь с таким никнеймом не найден.',
+        status:'404'
+      })
+    }
+    if(!passwordHash.verify(req.body.password, user.password)) {
+      return res.send({
+        title:'Неверный пароль!',
+        status:'501'
+      })
+    }
+    const token = jwt.sign({ id: user._id }, process.env.JWT, {
+      expiresIn: 86400 //24h
+    });
+    return res.send({
+      title:'Authorized',
+      token: token,
+      status:'200'
+    })
+  })
+})
+app.post('/api/addUser', [bodyParser.json(),createAccountLimiter], (req, res) => {
+  if (!req.body) return res.send({
+    title: 'Ничего не отправлено с клиента!'
+  });
+  console.log(req.body)
+  if (Object.keys(req.body).length != 5) {
+    return res.send({
+      title: 'Ошибка! Обезательные поля не заполненны!',
+      status: '501'
+    })
+  }
+  User.findOne({ username: req.body.username }, async(err, user) => {
+    if (err) console.log(err);
+    if (!user) {
+      const newUser = new User({
+        username: req.body.username,
+        name: req.body.name,
+        password: passwordHash.generate(req.body.password),
+        age: req.body.age,
+        regIP: req.body.ip
+      });
+
+      newUser.save(function (err) {
+        if (err) return console.log(err);
+      });
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT, {
+        expiresIn: 86400 //24h
+      });
+      return res.send({
+        title: 'Потльзователь успешно добавлен',
+        token: token,
+        status: '200'
+      })
+    } else {
+      return res.send({
+        title: 'Такой пользователь уже существует!',
+        status: '501'
+      })
+    }
   })
 })
 
