@@ -2,7 +2,7 @@
   <form>
     <input type="text" placeholder="Имя" v-model="name">
     <input type="text" placeholder="Логин" v-model="username">
-    <input type="number" min="13" max="92" placeholder="Возраст" v-model="age">
+    <input type="number" min="13" max="90" placeholder="Возраст" v-model="age">
     <input type="password" placeholder="Пароль" v-model="password">
     <input type="password" placeholder="Повтор Пароля" v-model="repeatPassword">
     <button @click.prevent="register">Зарегистрироваться</button>
@@ -23,6 +23,14 @@ export default {
       repeatPassword: "",
     }
   },
+  watch: {
+    age() {
+      if (this.age < 13)
+        this.age = 13
+      else if (this.age > 90)
+        this.age = 90
+    }
+  },
   methods: {
     register() {
       if (this.name.length < 4 || this.name.length > 16 ) {
@@ -31,6 +39,10 @@ export default {
       }
       if (this.username.length < 8 || this.username.length > 24 ) {
         alert("Логин должнен быть не меньше 8 и не больше 24 символов")
+        return
+      }
+      if (this.age < 13 && this.age > 90 ) {
+        alert("Возраст должен быть не меньше 13 и не больше 90 лет")
         return
       }
       if (this.password !== this.repeatPassword) {

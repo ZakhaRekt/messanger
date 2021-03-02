@@ -16,11 +16,7 @@ export default {
     }
   },
   mounted() {
-    axios.get("http://192.168.212.104:8081/api/user/" + this.$route.params.username, {
-          params: {
-            token: localStorage.getItem("token")
-          }
-        })
+    axios.get("http://192.168.212.104:8081/api/user/" + this.$route.params.username, { token: localStorage.getItem("token") })
         .then(response => {
           this.user = response.data.user
         })
