@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const rateLimit = require("express-rate-limit");
 const User = require('./db/user');
 const app = express();
-const { verifyToken } = require('./functions')
+const { verifyToken } = require('./utils/tokenVarification')
 
 
 app.use(helmet());
@@ -30,8 +30,8 @@ const createAccountLimiter = rateLimit({
   }
 });
 
-app.post('/api/users',bodyParser.json(), async (req, res) => {
-  verifyToken()
+app.get('/api/users',bodyParser.json(), async (req, res) => {
+  if(!verifyToken(req,res)) return;
   await User.find({}, async (err, users) => {
     if (err) return console.log(err);
     const usersParsed = [];
