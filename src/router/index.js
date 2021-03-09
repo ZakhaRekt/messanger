@@ -5,6 +5,7 @@ import LoginForm from "../components/LoginForm"
 import RegistrationForm from "../components/RegistrationForm"
 import Users from "../components/Users"
 import User from "../components/User"
+import Chat from "../components/Chat"
 
 export default new VueRouter({
     mode: 'history',
@@ -30,5 +31,9 @@ export default new VueRouter({
             name: "user",
             component: User
         },
+        {
+            path: "/chat",
+            component: Chat
+        }
     ]
 })
