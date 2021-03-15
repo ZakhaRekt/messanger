@@ -4,6 +4,7 @@ const schema = mongoose.Schema({
     name:String,
     password:String,
     age:Number,
+    token:{type: String, default:''},
     lastIP:{type:String, default:''},
     regIP:String
 });

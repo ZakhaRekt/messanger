@@ -10,7 +10,8 @@ const jwt = require('jsonwebtoken');
 const rateLimit = require("express-rate-limit");
 const User = require('./db/user');
 const app = express();
-const { verifyToken } = require('./utils/tokenVarification')
+const { verifyToken } = require('./utils/tokenVarification');
+const { deAuth } = require('./utils/deAuth');
 
 
 app.use(helmet());
@@ -18,9 +19,10 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
+setInterval(deAuth, 30000);
 const createAccountLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, 
-  max: 1,
+  max: 5,
   message:"API СКАЗАЛО ПОШЁЛ НАХУЙ!",
   handler: function(req,res) {
     return res.send({
@@ -30,9 +32,9 @@ const createAccountLimiter = rateLimit({
   }
 });
 
-app.get('/api/users',bodyParser.json(), async (req, res) => {
+app.get('/api/users',bodyParser.json(), (req, res) => {
   if(!verifyToken(req,res)) return;
-  await User.find({}, async (err, users) => {
+  User.find({}, async (err, users) => {
     if (err) return console.log(err);
     const usersParsed = [];
     users.forEach(async (u) => {
@@ -56,6 +58,7 @@ app.get('/api/user/:username', (req, res) => {
       title: "Не удалось получить пользователя не указан USERNAME"
     })
   }
+  if(!verifyToken(req,res)) return;
   User.findOne({ username: req.params.username }, (err, user) => {
     if (err) console.log(err);
     if (!user) return res.send({
@@ -76,13 +79,13 @@ app.post('/api/auth/', (req, res) => {
   if (!req.body) return res.send({
     title: 'Ничего не отправлено с клиента!'
   });
-  if (Object.keys(req.body).length != 2) {
+  if (Object.keys(req.body).length != 3) {
     return res.send({
       title: 'Ошибка! Обезательные поля не заполненны!',
       status: '501'
     })
   }
-  User.findOne({username:req.body.username}, (err,user) => {
+  User.findOne({username:req.body.username}, async (err,user) => {
     if(err) console.log(err);
     if(!user) {
       return res.send({
@@ -99,6 +102,8 @@ app.post('/api/auth/', (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT, {
       expiresIn: 86400 //24h
     });
+    user.token = token;
+    await user.save();
     return res.send({
       title:'Authorized',
       token: token,
@@ -110,7 +115,6 @@ app.post('/api/addUser', [bodyParser.json(),createAccountLimiter], (req, res) =>
   if (!req.body) return res.send({
     title: 'Ничего не отправлено с клиента!'
   });
-  console.log(req.body)
   if (Object.keys(req.body).length != 5) {
     return res.send({
       title: 'Ошибка! Обезательные поля не заполненны!',
@@ -125,15 +129,15 @@ app.post('/api/addUser', [bodyParser.json(),createAccountLimiter], (req, res) =>
         name: req.body.name,
         password: passwordHash.generate(req.body.password),
         age: req.body.age,
-        regIP: req.body.ip
+        regIP: req.body.ip,
       });
 
-      newUser.save(function (err) {
-        if (err) return console.log(err);
-      });
+      await newUser.save();
       const token = jwt.sign({ id: newUser._id }, process.env.JWT, {
         expiresIn: 86400 //24h
       });
+      newUser.token = token;
+      await newUser.save();
       return res.send({
         title: 'Потльзователь успешно добавлен',
         token: token,
