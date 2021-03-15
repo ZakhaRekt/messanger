@@ -33,12 +33,12 @@ export default {
   },
   methods: {
     register() {
-      if (this.name.length < 4 || this.name.length > 16 ) {
-        alert("Имя должно быть не меньше 4 и не больше 16 символов")
+      if (this.name.length < 4 || this.name.length > 26 ) {
+        alert("Имя должно быть не меньше 4 и не больше 26 символов")
         return
       }
-      if (this.username.length < 8 || this.username.length > 24 ) {
-        alert("Логин должнен быть не меньше 8 и не больше 24 символов")
+      if (this.username.length < 5 || this.username.length > 24 ) {
+        alert("Логин должнен быть не меньше 5 и не больше 24 символов")
         return
       }
       if (this.age < 13 && this.age > 90 ) {

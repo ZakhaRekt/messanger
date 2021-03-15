@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
   name: "RegistrationForm",
   data() {
@@ -19,18 +21,12 @@ export default {
   },
   methods: {
     login() {
-      fetch('http://192.168.212.104:8081/api/addUser', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password,
-          ip: this.clientIp,
-        })
+      axios.post('http://192.168.212.104:8081/api/auth', {
+        username: this.username,
+        password: this.password,
+        ip: this.clientIp,
       }).then(response => {
-        localStorage.setItem("token", response.json().token)
+        localStorage.setItem("token", response.data.token)
         this.$router.push('users')
       })
     }

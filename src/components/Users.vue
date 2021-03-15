@@ -23,12 +23,12 @@ export default {
     axios
         .get('http://192.168.212.104:8081/api/users', { headers: { Authorization: localStorage.getItem("token") }})
         .then(response => {
-          
-            if (response.data.status === "501" || response.data.status === "404")
-              this.$router.push("login")
-            else
-              this.users = response.data.users
-          })
+          console.log(response)
+          if (response.data.status === "501" || response.data.status === "404")
+            this.$router.push("login")
+          else
+            this.users = response.data.users
+        })
   }
 }
 </script>
