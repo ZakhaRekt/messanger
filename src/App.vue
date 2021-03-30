@@ -32,9 +32,11 @@ h1 {
   padding: 0 10px;
   font-size: 24px;
   z-index: 1;
+  background: #142A3B;
 }
 h1 a {
-  color: #333 !important;
+  color: #fff !important;
+  opacity: .9;
   text-decoration: none;
   margin: 0;
 }

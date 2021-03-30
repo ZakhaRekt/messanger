@@ -59,15 +59,17 @@ export default {
   background: #2648c6;
 }
 form {
-  background: #fff;
+  background: #142A3B;
   padding: 30px 30px 0 30px;
-  max-width: 600px;
+  max-width: 400px;
   margin: 0 0 50px 0;
   width: 100%;
   z-index: 1;
 }
 form h2 {
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
+  color: #fff;
+  opacity: .9;
 }
 input {
   width: 100%;
@@ -75,38 +77,44 @@ input {
   font-size: 14px;
   padding: 12px 12px;
   box-sizing: border-box;
-  border: 1px solid #aaa;
+  border: none;
+  border-bottom: 1px solid #2d4669;
   outline: none;
+  color: #fff;
+  opacity: .9;
+  background: #142A3B;
+}
+input::placeholder {
+  color: #fff;
+  opacity: 0.5;
 }
 button {
   width: 100%;
   height: 50px;
   font-size: 18px;
-  background: #2348cb;
+  background: linear-gradient(45deg, #5678F9, #5FBBFE);
   border: none;
-  color: #fff;
+  color: #eee;
   letter-spacing: 1.2px;
   cursor: pointer;
   outline: none;
-  transition: background .2s ease;
+  transition: opacity .2s ease;
 }
 button:hover {
-  background: #1d38a5;
+  opacity: 0.5;
 }
 a {
   display: inline-block;
   margin: 0;
   padding: 20px 0 25px 0;
   width: 100%;
-  color: #2c3e50;
+  color: #fff;
+  opacity: .9;
   text-decoration: none;
-  transition: color .2s ease;
+  transition: opacity .2s ease;
 }
 a:hover {
-  color: #000;
-}
-.login {
-  background: #2d5cff;
+  opacity: .5;
 }
 
 .circles{
@@ -208,8 +216,6 @@ a:hover {
   animation-delay: 0s;
   animation-duration: 11s;
 }
-
-
 
 @keyframes animate {
 
