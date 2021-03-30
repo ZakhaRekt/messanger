@@ -1,7 +1,7 @@
 <template>
   <div>
-    <router-link :to="'/login'">Войти</router-link>
-    <router-link :to="'/register'">Зарегистрироваться</router-link>
+    <router-link :to="'/login'">Вход</router-link>
+    <router-link :to="'/register'">Регистрация</router-link>
   </div>
 </template>
 
