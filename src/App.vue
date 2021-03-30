@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>
-      <router-link :to="'/'">Messenger</router-link>
+      <router-link :to="'/'">Cocksenger</router-link>
     </h1>
     <router-view></router-view>
   </div>
@@ -20,10 +20,22 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+body {
+  margin: 0;
+}
+h1 {
+  margin: 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 24px;
+  z-index: 1;
 }
 h1 a {
   color: #333 !important;
   text-decoration: none;
+  margin: 0;
 }
 </style>
