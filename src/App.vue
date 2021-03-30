@@ -24,6 +24,16 @@ export default {
 body {
   margin: 0;
 }
+h2 {
+  margin: 0 0 10px 0;
+  color: #fff;
+  opacity: .9;
+}
+p {
+  color: #fff;
+  opacity: .6;
+  text-align: left;
+}
 h1 {
   margin: 0;
   height: 50px;
