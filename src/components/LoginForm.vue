@@ -47,10 +47,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2648c6;
 }
 form {
-  background: #142A3B;
+  background: #1F3C53;
   padding: 30px 30px 0 30px;
   max-width: 400px;
   margin: 0 0 50px 0;
@@ -73,7 +72,7 @@ input {
   outline: none;
   color: #fff;
   opacity: .9;
-  background: #142A3B;
+  background: #1F3C53;
 }
 input::placeholder {
   color: #fff;

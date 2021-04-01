@@ -4,11 +4,12 @@
       <li
           v-for="message in messages"
           :key="message.id"
-          class="message">
-        <span class="message-user-name">{{ message.user.name }}</span>
-        <span class="message-date">{{ message.date }}</span>
+          class="message"
+          :class="{'me': message.user.name === 'Я'}"
+      >
         <img class="message-avatar" :src="message.user.avatarUrl" alt="">
         <p class="message-body">{{ message.body }}</p>
+        <span class="message-date">{{ message.date }}</span>
       </li>
     </ul>
   </div>
@@ -69,42 +70,69 @@ export default {
 ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 15px;
 }
 
 li {
   margin: 0;
-  display: grid;
-  color: #fff;
+  display: block;
 }
 
 .message {
-  grid-template-columns: 40px auto;
-  grid-template-rows: 14px auto;
-  grid-template-areas: "name date"
-                             "avatar message";
-  grid-gap: 10px;
+  width: 100%;
+  position: relative;
+  height: 60px;
+  margin: 0 0 20px 0;
 }
 
-.message-user-name {
-  font-size: 12px;
-  grid-area: name;
+.message:last-child {
+  margin: 0;
 }
 
 .message-date {
-  grid-area: date;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 60px;
+}
+
+.message.me .message-date {
+  left: auto;
+  right: 60px;
 }
 
 .message-avatar {
   width: 40px;
   height: 40px;
+  display: inline-block;
   background: rgb(0, 204, 255);
   border-radius: 50%;
   object-fit: cover;
-  grid-area: avatar;
+  position: absolute;
+  left: 0;
+}
+
+.message.me .message-avatar {
+  left: auto;
+  right: 0;
 }
 
 .message-body {
-  grid-area: body;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  max-width: calc(66% - 60px);
+  position: absolute;
+  margin: 0 0 10px 0;
+  left: 60px;
+  height: 40px;
+  background: #0a181f;
+  padding: 15px;
+}
+
+.message.me .message-body {
+  left: auto;
+  right: 60px;
 }
 </style>

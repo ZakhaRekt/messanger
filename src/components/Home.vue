@@ -25,7 +25,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2648c6;
 }
 .home h2 {
   margin: 0 0 16px 0;
@@ -33,7 +32,7 @@ export default {
   opacity: .9;
 }
 .content {
-  background: #142A3B;
+  background: #1F3C53;
   padding: 30px 30px 0 30px;
   max-width: 400px;
   margin: 0 0 50px 0;

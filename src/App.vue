@@ -1,8 +1,12 @@
 <template>
   <div id="app">
-    <h1>
-      <router-link :to="'/'">Cocksenger</router-link>
-    </h1>
+    <header>
+      <div class="container">
+        <h1>
+          <router-link :to="'/'">Cocksenger</router-link>
+        </h1>
+      </div>
+    </header>
     <router-view></router-view>
   </div>
 </template>
@@ -23,6 +27,7 @@ export default {
 }
 body {
   margin: 0;
+  background: #142A3B;
 }
 h2 {
   margin: 0 0 10px 0;
@@ -34,15 +39,20 @@ p {
   opacity: .6;
   text-align: left;
 }
-h1 {
-  margin: 0;
-  height: 50px;
+header {
+  background: #1F3C53;
+}
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
+  height: 50px;
+}
+h1 {
   padding: 0 10px;
   font-size: 24px;
   z-index: 1;
-  background: #142A3B;
 }
 h1 a {
   color: #fff !important;

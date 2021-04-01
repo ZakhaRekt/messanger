@@ -4,7 +4,10 @@
       <li v-for="user in users"
           :key="user.username"
           @click="selectChatUser(user.username)"
-          :class="{ selected: user === selectedChatUser }"
+          :class="{
+            selected: user === selectedChatUser,
+            nohistory: !user.body,
+          }"
       >
         <img class="avatar" :src="user.avatarUrl" alt="">
         <p>{{ user.name }}</p>
@@ -105,8 +108,10 @@ li {
   border-bottom: 1px solid #fff1;
 }
 
-li:first-child {
-  border-top: 1px solid #fff1;
+li.nohistory {
+  grid-template-areas: "avatar name";
+  grid-template-rows: auto;
+  grid-template-columns: 50px;
 }
 
 li:last-child {
@@ -142,6 +147,11 @@ li p:nth-child(2) {
   margin-top: 3px;
   opacity: .9;
 }
+li.nohistory p:nth-child(2) {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
 li p:nth-child(3) {
   grid-area: body;
   font-size: 14px;
@@ -153,6 +163,10 @@ li p:nth-child(4) {
   text-align: right;
   font-size: 12px;
   opacity: .3;
+}
+li.nohistory p:nth-child(3),
+li.nohistory p:nth-child(4) {
+  display: none;
 }
 
 li p {

@@ -21,10 +21,11 @@ export default {
 <style scoped>
 .container {
   display: grid;
+  max-width: 1400px;
+  margin: 0 auto;
   grid-template-columns: 300px auto;
-  grid-template-rows: auto 60px;
+  grid-template-rows: auto 120px;
   grid-gap: 10px;
-  background: #142A3B;
   height: calc(100vh - 50px);
 }
 </style>

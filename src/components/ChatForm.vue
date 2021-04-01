@@ -25,7 +25,7 @@ export default {
 <style scoped>
 div {
   grid-column: 2;
-  padding: 10px;
+  padding: 15px 15px 50px 15px;
 }
 
 form {
