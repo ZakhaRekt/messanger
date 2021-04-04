@@ -136,7 +136,6 @@ li p {
 .avatar {
   width: 50px;
   height: 50px;
-  background: rgb(0, 204, 255);
   border-radius: 50%;
   object-fit: cover;
   grid-area: avatar;

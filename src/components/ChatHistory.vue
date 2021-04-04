@@ -105,7 +105,6 @@ li {
   width: 40px;
   height: 40px;
   display: inline-block;
-  background: rgb(0, 204, 255);
   border-radius: 50%;
   object-fit: cover;
   position: absolute;
