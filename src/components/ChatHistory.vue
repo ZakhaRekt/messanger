@@ -117,6 +117,8 @@ li {
 }
 
 .message-body {
+  color: #fff;
+  opacity: .6;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;

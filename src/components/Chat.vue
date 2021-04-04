@@ -26,6 +26,6 @@ export default {
   grid-template-columns: 300px auto;
   grid-template-rows: auto 120px;
   grid-gap: 10px;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 80px);
 }
 </style>

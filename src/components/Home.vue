@@ -38,8 +38,9 @@ export default {
   z-index: 1;
 }
 .content p {
+  color: #fff;
+  opacity: .6;
   margin: 0 0 25px 0;
-  text-align: center;
   line-height: 150%;
 }
   .content a {
