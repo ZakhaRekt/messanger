@@ -116,7 +116,7 @@ input {
   padding: 12px 12px;
   box-sizing: border-box;
   border: none;
-  border-bottom: 1px solid #2d4669;
+  border-bottom: 1px solid #ffffff16;
   outline: none;
   color: #fff;
   opacity: .9;
