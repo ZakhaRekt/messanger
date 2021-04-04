@@ -1,6 +1,5 @@
 <template>
   <div class="login">
-    <CirclesAnimation/>
     <form>
       <h2>Вход</h2>
       <input type="text" placeholder="Логин" v-model="username">
@@ -13,11 +12,9 @@
 
 <script>
 import axios from "axios"
-import CirclesAnimation from "./CirclesAnimation";
 
 export default {
   name: "LoginForm",
-  components: {CirclesAnimation},
   data() {
     return {
       username: "",
@@ -42,7 +39,6 @@ export default {
 
 <style scoped>
 .login {
-  height: calc(100vh - 50px);
   position: relative;
   display: flex;
   align-items: center;

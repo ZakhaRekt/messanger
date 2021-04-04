@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <CirclesAnimation/>
     <div class="content">
       <h2>Добро пожаловать!</h2>
       <p>Этот сайт является мессенджером, созданным как проект для информатики 10-Б класса. Разработку ведут Захар Медуница и Дмитрий Демяненко</p>
@@ -11,16 +10,13 @@
 </template>
 
 <script>
-import CirclesAnimation from "./CirclesAnimation";
 export default {
   name: 'Home',
-  components: {CirclesAnimation},
 }
 </script>
 
 <style>
 .home {
-  height: calc(100vh - 50px);
   position: relative;
   display: flex;
   align-items: center;

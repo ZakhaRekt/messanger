@@ -1,6 +1,5 @@
 <template>
   <div class="registration">
-    <CirclesAnimation/>
     <form>
       <h2>Регистрация</h2>
       <input type="text" placeholder="Имя" v-model="name">
@@ -16,10 +15,8 @@
 
 <script>
 import axios from 'axios'
-import CirclesAnimation from "./CirclesAnimation";
 export default {
   name: "RegistrationForm",
-  components: {CirclesAnimation},
   data() {
     return {
       name: "",
@@ -90,7 +87,6 @@ export default {
 
 <style scoped>
 .registration {
-  height: calc(100vh - 50px);
   position: relative;
   display: flex;
   align-items: center;
