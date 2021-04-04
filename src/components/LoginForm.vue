@@ -69,11 +69,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 460px;
+  width: 100%;
 }
 form {
   background: #1F3C53;
   padding: 30px 30px 0 30px;
-  max-width: 400px;
   margin: 0 0 50px 0;
   width: 100%;
   z-index: 1;
@@ -99,22 +100,6 @@ input {
 input::placeholder {
   color: #fff;
   opacity: 0.5;
-}
-.alerts {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.alerts li {
-  color: #C0975F;
-  font-weight: bold;
-  opacity: 1;
-  text-align: left;
-  margin: 0 0 9px 0;
-  font-size: 12px;
-}
-.alerts li:last-child {
-  margin: 0 0 20px 0;
 }
 button {
   width: 100%;

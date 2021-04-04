@@ -21,6 +21,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 460px;
+  width: 100%;
 }
 .home h2 {
   margin: 0 0 16px 0;

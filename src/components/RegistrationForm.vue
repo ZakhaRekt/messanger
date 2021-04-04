@@ -124,14 +124,15 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 460px;
+  width: 100%;
 }
 form {
   background: #1F3C53;
   padding: 30px 30px 0 30px;
-  max-width: 400px;
   margin: 0 0 50px 0;
-  width: 100%;
   z-index: 1;
+  width: 100%;
 }
 form h2 {
   margin: 0 0 10px 0;
