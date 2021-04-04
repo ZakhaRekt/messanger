@@ -7,12 +7,7 @@
       <input type="number" min="13" max="90" placeholder="Возраст" v-model="age">
       <input type="password" placeholder="Пароль" v-model="password">
       <input type="password" placeholder="Повтор Пароля" v-model="repeatPassword">
-      <ul class="alerts">
-        <li
-            v-for="(alert, index) in alerts"
-            :key="index"
-        >⚠ {{ alert }}</li>
-      </ul>
+      <FormAlerts :alerts="alerts"/>
       <button @click.prevent="register">зарегистрироваться</button>
       <router-link :to="'/login'">Вход</router-link>
     </form>
@@ -21,8 +16,10 @@
 
 <script>
 import axios from 'axios'
+import FormAlerts from "./FormAlerts";
 export default {
   name: "RegistrationForm",
+  components: {FormAlerts},
   data() {
     return {
       name: "",
@@ -157,22 +154,6 @@ input {
 input::placeholder {
   color: #fff;
   opacity: .5;
-}
-.alerts {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.alerts li {
-  color: #C0975F;
-  font-weight: bold;
-  opacity: 1;
-  text-align: left;
-  margin: 0 0 9px 0;
-  font-size: 12px;
-}
-.alerts li:last-child {
-  margin: 0 0 20px 0;
 }
 button {
   width: 100%;

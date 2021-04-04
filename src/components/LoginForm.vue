@@ -4,12 +4,7 @@
       <h2>Вход</h2>
       <input type="text" placeholder="Логин" v-model="username">
       <input type="password" placeholder="Пароль" v-model="password">
-      <ul class="alerts">
-        <li
-            v-for="(alert, index) in alerts"
-            :key="index"
-        >⚠ {{ alert }}</li>
-      </ul>
+      <FormAlerts :alerts="alerts"/>
       <button @click.prevent="login">войти</button>
       <router-link :to="'/register'">Регистрация</router-link>
     </form>
@@ -18,9 +13,10 @@
 
 <script>
 import axios from "axios"
-
+import FormAlerts from "./FormAlerts";
 export default {
   name: "LoginForm",
+  components: {FormAlerts},
   data() {
     return {
       username: "",
