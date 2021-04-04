@@ -7,6 +7,12 @@
       <input type="number" min="13" max="90" placeholder="Возраст" v-model="age">
       <input type="password" placeholder="Пароль" v-model="password">
       <input type="password" placeholder="Повтор Пароля" v-model="repeatPassword">
+      <ul class="alerts">
+        <li
+            v-for="(alert, index) in alerts"
+            :key="index"
+        >⚠ {{ alert }}</li>
+      </ul>
       <button @click.prevent="register">зарегистрироваться</button>
       <router-link :to="'/login'">Вход</router-link>
     </form>
@@ -24,36 +30,66 @@ export default {
       age: "",
       password: "",
       repeatPassword: "",
+
+      alerts: [],
     }
   },
   watch: {
+    name() {
+      this.alerts = []
+    },
+    username() {
+      this.alerts = []
+    },
     age() {
-      if (this.age < 13)
-        this.age = 13
-      else if (this.age > 90)
-        this.age = 90
-    }
+      this.alerts = []
+    },
+    password() {
+      this.alerts = []
+    },
+    repeatPassword() {
+      this.alerts = []
+    },
   },
   methods: {
-    register() {
-      if (this.name.length < 4 || this.name.length > 26 ) {
-        alert("Имя должно быть не меньше 4 и не больше 26 символов")
-        return
+    updateAlerts() {
+      this.alerts = []
+
+      if (this.name.length === 0) {
+        this.alerts.push("Заполните поле имени!")
       }
-      if (this.username.length < 5 || this.username.length > 24 ) {
-        alert("Логин должнен быть не меньше 5 и не больше 24 символов")
-        return
+      else if (this.name.length < 4 || this.name.length > 26 ) {
+        this.alerts.push("Имя должно быть от 4 до 26 символов!")
       }
-      if (this.age < 13 && this.age > 90 ) {
-        alert("Возраст должен быть не меньше 13 и не больше 90 лет")
-        return
+
+      if (this.username.length === 0) {
+        this.alerts.push("Заполните поле логина!")
       }
+      else if (this.username.length < 5 || this.username.length > 24) {
+        this.alerts.push("Логин должнен быть от 5 до 24 символов!")
+      }
+
+      if (this.age.length === 0) {
+        this.alerts.push("Заполните поле возраста!")
+      }
+      else if (this.age < 13 || this.age > 90) {
+        this.alerts.push("Возраст должен быть от 13 до 90 лет!")
+      }
+
+      if (this.password.length === 0) {
+        this.alerts.push("Заполните поле пароля!")
+      }
+      else if (this.password.length < 8 || this.password.length > 36 ) {
+        this.alerts.push("Пароль должнен быть от 8 до 36 символов")
+      }
+
       if (this.password !== this.repeatPassword) {
-        alert("Пароли отличаются")
-        return
+        this.alerts.push("Пароли отличаются")
       }
-      if (this.password.length < 8 || this.password.length > 36 ) {
-        alert("Пароль должнен быть не меньше 8 и не больше 36 символов")
+    },
+    register() {
+      this.updateAlerts()
+      if (this.alerts === []) {
         return
       }
 
@@ -120,7 +156,23 @@ input {
 }
 input::placeholder {
   color: #fff;
-  opacity: 0.5;
+  opacity: .5;
+}
+.alerts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.alerts li {
+  color: #C0975F;
+  font-weight: bold;
+  opacity: 1;
+  text-align: left;
+  margin: 0 0 9px 0;
+  font-size: 12px;
+}
+.alerts li:last-child {
+  margin: 0 0 20px 0;
 }
 button {
   width: 100%;

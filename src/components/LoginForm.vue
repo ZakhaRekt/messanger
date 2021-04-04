@@ -4,6 +4,12 @@
       <h2>Вход</h2>
       <input type="text" placeholder="Логин" v-model="username">
       <input type="password" placeholder="Пароль" v-model="password">
+      <ul class="alerts">
+        <li
+            v-for="(alert, index) in alerts"
+            :key="index"
+        >⚠ {{ alert }}</li>
+      </ul>
       <button @click.prevent="login">войти</button>
       <router-link :to="'/register'">Регистрация</router-link>
     </form>
@@ -20,10 +26,34 @@ export default {
       username: "",
       password: "",
       clientIp: "",
+
+      alerts: [],
     }
   },
   methods: {
+    updateAlerts() {
+      this.alerts = []
+
+      if (this.username.length === 0) {
+        this.alerts.push("Заполните поле логина!")
+      }
+      else if (this.username.length < 5 || this.username.length > 24) {
+        this.alerts.push("Некорректное поле логина.")
+      }
+
+      if (this.password.length === 0) {
+        this.alerts.push("Заполните поле пароля!")
+      }
+      else if (this.password.length < 8 || this.password.length > 36 ) {
+        this.alerts.push("Некорректное поле пароля.")
+      }
+    },
     login() {
+      this.updateAlerts()
+      if (this.alerts === []) {
+        return
+      }
+
       axios.post('http://192.168.212.104:8081/api/auth', {
         username: this.username,
         password: this.password,
@@ -73,6 +103,22 @@ input {
 input::placeholder {
   color: #fff;
   opacity: 0.5;
+}
+.alerts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.alerts li {
+  color: #C0975F;
+  font-weight: bold;
+  opacity: 1;
+  text-align: left;
+  margin: 0 0 9px 0;
+  font-size: 12px;
+}
+.alerts li:last-child {
+  margin: 0 0 20px 0;
 }
 button {
   width: 100%;
