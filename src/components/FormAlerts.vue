@@ -33,4 +33,13 @@ li {
 li:last-child {
   margin: 0 0 20px 0;
 }
+@media(max-height: 729px) {
+  li {
+    margin: 0 0 7px 0;
+    font-size: 10px;
+  }
+  li:last-child {
+    margin: 0 0 12px 0;
+  }
+}
 </style>

@@ -33,7 +33,7 @@ export default {
   background: #1F3C53;
   padding: 30px 30px 0 30px;
   max-width: 400px;
-  margin: 0 0 50px 0;
+  margin: 0 0 20px 0;
   width: 100%;
   z-index: 1;
 }
@@ -72,5 +72,27 @@ export default {
 }
 .content a:hover {
   opacity: .5;
+}
+@media(max-height: 729px) {
+  .home {
+    max-width: 400px;
+  }
+  .home h2 {
+    font-size: 21px;
+    margin: 0 0 13px 0;
+  }
+  .home .content p {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+  }
+  .home .content a:nth-child(3) {
+    height: 40px;
+    font-size: 14px;
+    margin: 6px 0 0 0;
+  }
+  .content a:nth-child(4) {
+    font-size: 14px;
+    padding: 15px 0 22px 0;
+  }
 }
 </style>

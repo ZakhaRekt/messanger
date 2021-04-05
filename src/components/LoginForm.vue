@@ -129,4 +129,26 @@ a {
 a:hover {
   opacity: .5;
 }
+@media(max-height: 729px) {
+  .login {
+    max-width: 400px;
+  }
+  form h2 {
+    font-size: 21px;
+  }
+  input {
+    margin: 0 0 13px 0;
+    font-size: 12px;
+    padding: 8px;
+  }
+  button {
+    height: 40px;
+    font-size: 14px;
+    margin: 6px 0 0 0;
+  }
+  a {
+    font-size: 14px;
+    padding: 15px 0 22px 0;
+  }
+}
 </style>

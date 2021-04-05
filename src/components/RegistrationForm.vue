@@ -130,7 +130,7 @@ export default {
 form {
   background: #1F3C53;
   padding: 30px 30px 0 30px;
-  margin: 0 0 50px 0;
+  margin: 0 0 20px 0;
   z-index: 1;
   width: 100%;
 }
@@ -143,7 +143,7 @@ input {
   width: 100%;
   margin: 0 0 20px 0;
   font-size: 14px;
-  padding: 12px 12px;
+  padding: 12px;
   box-sizing: border-box;
   border: none;
   border-bottom: 1px solid #ffffff16;
@@ -183,5 +183,27 @@ a {
 }
 a:hover {
   opacity: .5;
+}
+@media(max-height: 729px) {
+  .registration {
+    max-width: 400px;
+  }
+  form h2 {
+    font-size: 21px;
+  }
+  input {
+    margin: 0 0 13px 0;
+    font-size: 12px;
+    padding: 8px;
+  }
+  button {
+    height: 40px;
+    font-size: 14px;
+    margin: 6px 0 0 0;
+  }
+  a {
+    font-size: 14px;
+    padding: 15px 0 22px 0;
+  }
 }
 </style>
