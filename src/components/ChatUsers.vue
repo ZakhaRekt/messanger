@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div class="current-user">
+      User
+    </div>
+    <form class="search-form">
+      <input type="text" placeholder="Найти пользователя">
+    </form>
     <ul>
       <li v-for="user in users"
           :key="user.username"
@@ -87,13 +93,50 @@ export default {
 .container {
   grid-column: 1;
   grid-row: 1 / 3;
+  padding: 20px 0 0 0;
+}
+
+.current-user {
+  margin: 0 0 20px 0;
+}
+
+.search-form {
+  position: relative;
+  margin: 0 0 20px 0;
+}
+
+.search-form:after {
+  content: '🔎';
+  font-size: 22px;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  z-index: 1;
+}
+
+.search-form input {
+  width: 100%;
+  font-size: 14px;
+  padding: 12px;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #ffffff16;
+  outline: none;
+  color: #fff;
+  opacity: .9;
+  background: #142A3B;
+}
+
+.search-form input::placeholder {
+  color: #fff;
+  opacity: .5;
 }
 
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  width: calc(100% - 4px);
+  width: 100%;
 }
 
 li {

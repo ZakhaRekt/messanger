@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="chat-container">
     <ChatUsers/>
     <ChatHistory/>
     <ChatForm/>
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.chat-container {
   display: grid;
   max-width: 1400px;
   margin: 0 auto;
