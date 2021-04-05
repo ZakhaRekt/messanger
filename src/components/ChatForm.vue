@@ -1,8 +1,8 @@
 <template>
   <div>
     <form @submit.prevent="submit">
-      <textarea class="message-input" v-model="messageText"></textarea>
-      <button class="submit">Отправить</button>
+      <textarea class="message-input" v-model="messageText" placeholder="Текст"></textarea>
+      <button class="submit">отправить</button>
     </form>
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
 div {
   grid-column: 2;
   padding: 15px 15px 50px 15px;
+  background: #142A3B;
 }
 
 form {
@@ -36,21 +37,29 @@ form {
 .message-input {
   width: 100%;
   resize: none;
-  font-size: 18px;
-  padding: 5px 8px;
+  font-size: 14px;
+  padding: 8px 11px;
   user-select: none;
-  background: #2c3e50;
-  border: none;
+  background: none;
+  border: 1px solid #ffffff16;
   outline: none;
   color: #fff;
   opacity: .9;
+  font-family: Arial,serif;
+}
+
+.message-input::placeholder {
+  color: #fff;
+  opacity: .5;
 }
 
 .submit {
+  font-size: 18px;
   width: 200px;
   background: linear-gradient(45deg, #5678F9, #5FBBFE);
   border: none;
   color: #fff;
   outline: none;
+  cursor: pointer;
 }
 </style>

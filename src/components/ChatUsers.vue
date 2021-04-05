@@ -1,10 +1,7 @@
 <template>
   <div class="container">
-    <div class="current-user">
-      User
-    </div>
     <form class="search-form">
-      <input type="text" placeholder="Найти пользователя">
+      <input type="text" placeholder="Поиск">
     </form>
     <ul>
       <li v-for="user in users"
@@ -94,37 +91,34 @@ export default {
   grid-column: 1;
   grid-row: 1 / 3;
   padding: 20px 0 0 0;
-}
-
-.current-user {
-  margin: 0 0 20px 0;
+  background: #142A3B;
 }
 
 .search-form {
   position: relative;
   margin: 0 0 20px 0;
+  padding: 0 15px;
 }
 
 .search-form:after {
   content: '🔎';
-  font-size: 22px;
+  font-size: 16px;
   position: absolute;
-  right: 10px;
-  top: 5px;
-  z-index: 1;
+  left: 15px;
+  top: 8px;
 }
 
 .search-form input {
   width: 100%;
   font-size: 14px;
-  padding: 12px;
+  padding: 12px 12px 12px 28px;
   box-sizing: border-box;
   border: none;
   border-bottom: 1px solid #ffffff16;
   outline: none;
   color: #fff;
   opacity: .9;
-  background: #142A3B;
+  background: none;
 }
 
 .search-form input::placeholder {
@@ -140,7 +134,7 @@ ul {
 }
 
 li {
-  padding: 10px 10px;
+  padding: 8px 15px;
   box-sizing: border-box;
   text-align: left;
   font-size: 18px;
@@ -148,7 +142,6 @@ li {
   grid-template-areas: "avatar name date" "avatar body date";
   grid-template-rows: auto auto;
   grid-template-columns: 50px auto auto;
-  border-bottom: 1px solid #fff1;
 }
 
 li.nohistory {
@@ -162,14 +155,20 @@ li:last-child {
 }
 
 li {
-  cursor: default;
+  cursor: pointer;
 }
 li * {
-  cursor: default;
+  cursor: pointer;
+  user-select: none;
 }
 
 li.selected {
   background-color: #0a181f;
+  cursor: default;
+}
+
+li.selected * {
+  cursor: default;
 }
 
 li p {

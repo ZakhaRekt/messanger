@@ -25,7 +25,7 @@ export default {
 }
 body {
   margin: 0;
-  background: #142A3B;
+  background: #112432;
 }
 h2 {
   margin: 0 0 10px 0;
