@@ -1,7 +1,7 @@
 <template>
   <div class="chat-history">
     <ChatHistoryHeader/>
-    <ul>
+    <ul ref="chatHistory">
       <li
           v-for="message in messages"
           :key="message.id"
@@ -123,6 +123,9 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight;
   }
 }
 </script>
