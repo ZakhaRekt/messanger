@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const rateLimit = require("express-rate-limit");
 const User = require('./db/user');
 const app = express();
+const expressWs = require('express-ws')(app);
 const { verifyToken } = require('./utils/tokenVarification');
 const { deAuth } = require('./utils/deAuth');
 
@@ -19,12 +20,12 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
-setInterval(deAuth, 30000);
+setInterval(deAuth, 120000);
 const createAccountLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, 
+  windowMs: 60 * 60 * 1000,
   max: 5,
-  message:"API СКАЗАЛО ПОШЁЛ НАХУЙ!",
-  handler: function(req,res) {
+  message: "API СКАЗАЛО ПОШЁЛ НАХУЙ!",
+  handler: function (req, res) {
     return res.send({
       title: this.message,
       status: '429'
@@ -32,8 +33,8 @@ const createAccountLimiter = rateLimit({
   }
 });
 
-app.get('/api/users',bodyParser.json(), (req, res) => {
-  if(!verifyToken(req,res)) return;
+app.get('/api/users', bodyParser.json(), (req, res) => {
+  if (!verifyToken(req, res)) return;
   User.find({}, async (err, users) => {
     if (err) return console.log(err);
     const usersParsed = [];
@@ -58,7 +59,7 @@ app.get('/api/user/:username', (req, res) => {
       title: "Не удалось получить пользователя не указан USERNAME"
     })
   }
-  if(!verifyToken(req,res)) return;
+  if (!verifyToken(req, res)) return;
   User.findOne({ username: req.params.username }, (err, user) => {
     if (err) console.log(err);
     if (!user) return res.send({
@@ -69,12 +70,38 @@ app.get('/api/user/:username', (req, res) => {
       status: "200",
       user: {
         username: user.username,
-        name:user.name,
-        age:user.age
+        name: user.name,
+        age: user.age
       }
     })
   })
 })
+app.ws('/', (ws, req) => {
+  ws.on('message', (msg) => {
+    let msgObj = JSON.parse(msg);
+    console.log(msgObj)
+    User.findOne({ token: msgObj.token }, async (err, user) => {
+      if (err) console.log(err);
+      if (!user) {
+        return ws.send(JSON.stringify({
+          title: 'Пользователь с таким токеном не найден.',
+          status: '404'
+        }))
+      }
+      user.messages.push({
+        msg_id: msgObj.id,
+        msg_date: msgObj.date,
+        msg_content: msgObj.content,
+        msg_checked: msgObj.checked
+      })
+      return ws.send(JSON.stringify({
+        title: 'Сообщение добавленно в базу данных!',
+        status: '200'
+      }))
+    })
+  })
+})
+
 app.post('/api/auth/', (req, res) => {
   if (!req.body) return res.send({
     title: 'Ничего не отправлено с клиента!'
@@ -85,18 +112,18 @@ app.post('/api/auth/', (req, res) => {
       status: '501'
     })
   }
-  User.findOne({username:req.body.username}, async (err,user) => {
-    if(err) console.log(err);
-    if(!user) {
+  User.findOne({ username: req.body.username }, async (err, user) => {
+    if (err) console.log(err);
+    if (!user) {
       return res.send({
-        title:'Пользователь с таким никнеймом не найден.',
-        status:'404'
+        title: 'Пользователь с таким никнеймом не найден.',
+        status: '404'
       })
     }
-    if(!passwordHash.verify(req.body.password, user.password)) {
+    if (!passwordHash.verify(req.body.password, user.password)) {
       return res.send({
-        title:'Неверный пароль!',
-        status:'501'
+        title: 'Неверный пароль!',
+        status: '501'
       })
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT, {
@@ -105,13 +132,13 @@ app.post('/api/auth/', (req, res) => {
     user.token = token;
     await user.save();
     return res.send({
-      title:'Authorized',
+      title: 'Authorized',
       token: token,
-      status:'200'
+      status: '200'
     })
   })
 })
-app.post('/api/addUser', [bodyParser.json(),createAccountLimiter], (req, res) => {
+app.post('/api/addUser', [bodyParser.json(), createAccountLimiter], (req, res) => {
   if (!req.body) return res.send({
     title: 'Ничего не отправлено с клиента!'
   });
@@ -121,7 +148,7 @@ app.post('/api/addUser', [bodyParser.json(),createAccountLimiter], (req, res) =>
       status: '501'
     })
   }
-  User.findOne({ username: req.body.username }, async(err, user) => {
+  User.findOne({ username: req.body.username }, async (err, user) => {
     if (err) console.log(err);
     if (!user) {
       const newUser = new User({

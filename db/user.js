@@ -6,6 +6,7 @@ const schema = mongoose.Schema({
     age:Number,
     token:{type: String, default:''},
     lastIP:{type:String, default:''},
+    messages: {type:Array, default: []},
     regIP:String
 });
 module.exports = mongoose.model("User", schema)
