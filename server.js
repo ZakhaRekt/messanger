@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
-setInterval(deAuth, 120000);
+setInterval(deAuth, 2000000);
 const createAccountLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 5,
@@ -76,6 +76,26 @@ app.get('/api/user/:username', (req, res) => {
     })
   })
 })
+
+
+app.post('/api/getMessages/', bodyParser.json(), (req, res) => {
+  if (!req.body) return res.send({
+    title: 'Ничего не отправлено с клиента!'
+  });
+  if (!verifyToken(req, res)) return;
+  User.findOne({ username: req.body.username }, (err, user) => {
+    if(!user) return res.send({
+      title: 'Пользователь не найден!',
+      status:'404'
+    })
+    res.send({
+      title: 'Сообщения пользователя',
+      status:'200',
+      username: user.username,
+      messages: user.messages
+    })
+  })
+})
 app.ws('/', (ws, req) => {
   ws.on('message', (msg) => {
     let msgObj = JSON.parse(msg);
@@ -84,7 +104,8 @@ app.ws('/', (ws, req) => {
       if (err) console.log(err);
       if (!user) {
         return ws.send(JSON.stringify({
-          title: 'Пользователь с таким токеном не найден.',
+          state: 'SERVER: MSG_ERROR',
+          error: 'USER NOT DEFINED',
           status: '404'
         }))
       }
@@ -94,8 +115,10 @@ app.ws('/', (ws, req) => {
         msg_content: msgObj.content,
         msg_checked: msgObj.checked
       })
+      user.save().catch(err => console.log(err))
       return ws.send(JSON.stringify({
-        title: 'Сообщение добавленно в базу данных!',
+        state: 'SERVER: MSG_ADDED',
+        message_date: msgObj,
         status: '200'
       }))
     })
