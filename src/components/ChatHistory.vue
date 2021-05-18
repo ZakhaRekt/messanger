@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import ChatHistoryHeader from "./ChatHistoryHeader";
+import ChatHistoryHeader from "./ChatHistoryHeader"
+import axios from "axios"
 export default {
   components: {ChatHistoryHeader},
   data() {
@@ -125,8 +126,25 @@ export default {
     }
   },
   mounted() {
+    axios
+        .post('http://192.168.212.104:8081/api/getMessages', 
+              {username: "xyi"},
+              {headers: { Authorization: localStorage.getItem("token")}})
+        .then(response => {
+          response.data.messages.forEach(message => {
+            this.messages.push({
+              id: message.msg_id,
+              user: {
+                name: response.data.username,
+                avatarUrl: "",
+              },
+              body: message.msg_content,
+              date: message.msg_date,
+            })
+          })
+        })
     this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight;
-  }
+  },
 }
 </script>
 

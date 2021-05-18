@@ -11,13 +11,44 @@
 export default {
   data() {
     return {
-      messageText: ""
+      messageText: "",
     }
   },
   methods: {
     submit() {
-      alert(this.messageText)
+      let dateNow = Date.now()
+      this.connection.send(JSON.stringify(
+        { 
+          token: localStorage.getItem("token"),
+          id: dateNow,
+          date: new Date(dateNow),
+          content: this.messageText,
+          checked: false
+        }
+        ))
     }
+  },
+  created: function() {
+    // send msg
+    this.connection = new WebSocket("ws://192.168.212.104:8081")
+
+    this.connection.onmessage = function(event) {
+      let response = JSON.parse(event.data)
+      switch(response.state) {
+        case "SERVER: MSG_ADDED":
+          console.log(response.message_date.content);
+          break;
+        case "SERVER: MSG_ERROR":
+          alert(response.error);
+          break;
+      }
+    }
+
+    this.connection.onopen = function(event) {
+      console.log(event)
+      console.log("Successfully connected to the echo websocket server...")
+    }
+    
   }
 }
 </script>

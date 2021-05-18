@@ -71,6 +71,11 @@ export default {
           name: "Temur",
           avatarUrl: "https://proprikol.ru/wp-content/uploads/2020/02/kartinki-na-avatarku-dlya-parnej-i-muzhchin-1-1.jpg"
         },
+        {
+          username: "dsaiasdsso",
+          name: "Vlad",
+          avatarUrl: "https://steamuserimages-a.akamaihd.net/ugc/772777980563708481/D37ABCA6EB133C392A85EB348A42C78F323A0A73/"
+        },
       ],
       selectedChatUser: null
     }
@@ -82,6 +87,8 @@ export default {
           this.selectedChatUser = user
       })
     }
+  },
+  created() {
   }
 }
 </script>
