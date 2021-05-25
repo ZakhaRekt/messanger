@@ -83,16 +83,24 @@ app.post('/api/getMessages/', bodyParser.json(), (req, res) => {
     title: 'Ничего не отправлено с клиента!'
   });
   if (!verifyToken(req, res)) return;
-  User.findOne({ username: req.body.username }, (err, user) => {
-    if(!user) return res.send({
-      title: 'Пользователь не найден!',
+  User.find({}, (err, users) => {
+    if(!users.some(u => u.username != req.body.usernameTo || req.body.usernameFrom)) return res.send({
+      title: 'Отправитель или получатель не найден!',
       status:'404'
     })
-    res.send({
-      title: 'Сообщения пользователя',
+    var allMessages = [];
+    users.forEach(u => {
+      if(u.username === req.body.usernameTo) {
+        allMessages = allMessages.concat(u.messages)
+      }
+      if(u.username === req.body.usernameFrom) {
+        allMessages = allMessages.concat(u.messages)
+      }
+    })
+    return res.send({
+      title: 'Сообщения пользователей',
       status:'200',
-      username: user.username,
-      messages: user.messages
+      messages: allMessages.sort((m_prev, m_next) => m_prev.id - m_next.id)
     })
   })
 })
@@ -112,6 +120,7 @@ app.ws('/', (ws, req) => {
       user.messages.push({
         msg_id: msgObj.id,
         msg_date: msgObj.date,
+        msg_author: msgObj.author,
         msg_content: msgObj.content,
         msg_checked: msgObj.checked
       })
