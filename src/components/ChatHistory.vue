@@ -6,7 +6,7 @@
           v-for="message in messages"
           :key="message.id"
           class="message"
-          :class="{'me': message.user.name === 'Я'}"
+          :class="{'me': message.user.name === 'lyashket'}"
       >
         <img class="message-avatar" :src="message.user.avatarUrl" alt="">
         <div class="message-body-container">
@@ -128,15 +128,15 @@ export default {
   mounted() {
     axios
         .post('http://192.168.212.104:8081/api/getMessages', 
-              {username: "xyi"},
+              {usernameFrom: "lyashket", usernameTo: "xyi"},
               {headers: { Authorization: localStorage.getItem("token")}})
         .then(response => {
           response.data.messages.forEach(message => {
             this.messages.push({
               id: message.msg_id,
               user: {
-                name: response.data.username,
-                avatarUrl: "",
+                name: message.msg_author,
+                avatarUrl: "https://yt3.ggpht.com/ytc/AAUvwnhSSaF3Q-PyyTSis4EH6Cu8FZ32LNvkxI9Gl_rn=s900-c-k-c0x00ffffff-no-rj",
               },
               body: message.msg_content,
               date: message.msg_date,

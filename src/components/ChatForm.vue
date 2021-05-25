@@ -22,6 +22,7 @@ export default {
           token: localStorage.getItem("token"),
           id: dateNow,
           date: new Date(dateNow),
+          author: "xyi",
           content: this.messageText,
           checked: false
         }
